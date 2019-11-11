@@ -1,0 +1,191 @@
+.w {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.body {
+    background-color: #aaaaaa;
+}
+
+.header {
+    background-color: #0e90d2;
+    height: 60px;
+    overflow: hidden;
+}
+
+.logo {
+    float: left;
+}
+
+.logo a {
+    height: 60px;
+    line-height: 60px;
+    display: block;
+    font-size: 18px;
+    color: white;
+}
+
+.header .items {
+    float: right;
+}
+
+.header .items ul li {
+    float: left;
+}
+
+.header .items ul li a {
+    height: 60px;
+    line-height: 60px;
+    display: block;
+    font-size: 16px;
+    color: white;
+    padding: 0 20px;
+}
+
+.apiheader {
+    margin-top: 20px;
+    border-bottom: 2px solid #999999;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.apiheader h2 {
+    color: #333;
+    font-size: 24px;
+    font-weight: normal;
+    height: 50px;
+    line-height: 50px;
+}
+
+.apiheader p {
+    font-size: 12px;
+    color: #666;
+}
+
+.apibody li {
+    float: left;
+    width: 400px;
+    text-align: center;
+}
+
+.apibody .api_body_title {
+    display: block;
+    width: 280px;
+    border: 1px solid #0e90d2;
+    border-radius: 10px;
+    background-color: #0e90d2;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: 15px auto 0;
+    transition: all 0.4s;
+    -ms-transition: all 0.4s; /* IE 9 */
+    -moz-transition: all 0.4s; /* Firefox */
+    -webkit-transition: all 0.4s; /* Safari 和 Chrome */
+    -o-transition: all 0.4s; /* Opera */
+}
+
+.api_body_title:hover {
+    transform: scale(1.2);
+    -ms-transform: scale(1.2); /* IE 9 */
+    -moz-transform: scale(1.2); /* Firefox */
+    -webkit-transform: scale(1.2); /* Safari 和 Chrome */
+    -o-transform: scale(1.2); /* Opera */
+}
+
+.apibody .api_body_title h3 {
+    margin: 0 auto;
+    color: white;
+    font-size: 18px;
+}
+
+.apibody .api_body_title p {
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 12px;
+}
+
+.apibody .api_body_desc {
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: #666666;
+}
+
+.github_body li {
+    width: 1202px;
+    height: 482px;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    background-color: #e2e2e2;
+    margin-bottom: 20px;
+}
+
+.github_left {
+    width: 240px;
+    height: 480px;
+    float: left;
+    text-align: center;
+}
+
+.github_left a {
+    width: 240px;
+    font-size: 28px;
+    color: #0e90d2;
+    margin-top: 10px;
+    text-align: left;
+    padding: 8px 15px;
+    display: block;
+}
+
+.github_left .intro {
+    font-size: 14px;
+    color: #666;
+    text-align: left;
+    padding: 0 15px;
+    word-wrap:break-word;
+    line-height: 28px;
+}
+
+.github_left .erweima {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.github_left .erweima img {
+    width: 200px;
+    height: 200px;
+}
+
+.github_right {
+    float: left;
+    overflow: scroll;
+    width: 960px;
+}
+
+.github_right ul {
+    width: 200%;
+    height: 480px;
+}
+
+.github_right ul li {
+    float: left;
+    width: 240px;
+    border:none;
+    height: 480px;
+    text-align: center;
+}
+
+.github_right img {
+    width: 230px;
+    height: 460px;
+    margin-top: 10px;
+}
+

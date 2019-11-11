@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>宽高自动适应</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .box {
+            width: 500px;
+            height: 600px;
+            background-color: #cccccc;
+            margin: 100px auto;
+
+            /*开启伸缩布局*/
+            display: flex;
+            /*设置伸缩的主轴*/
+            flex-direction: column;
+        }
+
+        header {
+            height: 80px;
+            width: 100%;
+            background-color: #1ffb3d;
+        }
+
+        main {
+            width: 100%;
+            flex: 1;
+            background-color: #08b5fb;
+            display: flex;
+        }
+
+        article {
+            height: 100%;
+            background-color: red;
+            flex: 1;
+        }
+
+        aside {
+            height: 100%;
+            background-color: #c1a2fb;
+            flex: 3;
+        }
+
+        footer {
+            height: 60px;
+            width: 100%;
+            background-color: #2d5efb;
+        }
+
+
+    </style>
+</head>sklkdkdkdkd
+<body>
+<div class="box">
+    <header></header>
+    <main>
+        <article></article>
+        <aside></aside>
+    </main>
+    <footer></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+.items_nav li {
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 20px;
+    text-align: center;
+    line-height: 45px;
+}
+
+.items_nav a {
+    color: black;
+}
+
+.items_details li {
+    float: left;
+    margin: 0 20px;
+    font-size: 12px;
+    line-height: 45px;
+}
+
+.items_details a {
+    font-family: icomoon;
+}
+
+.good_list {
+    margin-top: 20px;
+}
+.good_list li {
+    float: left;
+    width: 290px;
+    height: 460px;
+    background-color: pink;
+}

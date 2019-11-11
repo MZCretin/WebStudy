@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>伸缩盒子案例</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .box {
+            width: 600px;
+            height: 500px;
+            margin: 100px auto;
+            display: flex;
+            /*指定伸缩方向*/
+            flex-direction: column;
+        }
+
+        header {
+            width: 100%;
+            background-color: #08b5fb;
+            height: 80px;
+        }
+
+        main {
+            width: 100%;
+            background-color: #cccccc;
+            flex: 1;
+            display: flex;
+        }
+
+        article {
+            flex: 1;
+            background-color: red;
+            height: 100%;
+        }
+
+        aside {
+            flex: 4;
+            background-color: pink;
+            height: 100%;
+        }
+
+        footer {
+            width: 100%;
+            height: 80px;
+            background-color: #2d5efb;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <header></header>
+    <main>
+        <article></article>
+        <aside></aside>
+    </main>
+    <footer></footer>
+</div>
+</body>
+</html>
