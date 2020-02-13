@@ -166,26 +166,25 @@
 
 .github_right {
     float: left;
-    overflow: scroll;
     width: 960px;
 }
 
 .github_right ul {
-    width: 200%;
+    overflow: auto;
     height: 480px;
 }
 
 .github_right ul li {
     float: left;
-    width: 240px;
+    width: 230px;
     border:none;
-    height: 480px;
+    height: 460px;
     text-align: center;
 }
 
 .github_right img {
-    width: 230px;
-    height: 460px;
-    margin-top: 10px;
+    width: 220px;
+    height: 440px;
+    margin-top: 20px;
 }
 
