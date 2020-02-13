@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文字打字机效果</title>
+    <style>
+        @keyframes w {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 200px;
+            }
+        }
+        
+        div {
+            font-size: 20px;
+            /* 动画名称 持续时间 运动曲线 何时开始 播放次数 是否反方向 动画起始或者结束的状态 */
+            animation: w 5s steps(10) forwards;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div>我在世纪佳缘安静等你</div>
+</body>
+
+</html>
