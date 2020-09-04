@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>你好呀</button>
+    <input type="text" value="我是内容">
+    <script>
+        var btn = document.querySelector("button");
+        var input = document.querySelector("input");
+
+        var listener = function() {
+            alert("ssss");
+        }
+
+        btn.onclick = listener;
+
+        btn.addEventListener('click', listener)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  li {
+    list-style: none;
+    margin: 0 20px;
+  }
+
+  .item {
+    width: 165px;
+    height: 35px;
+    position: relative;
+  }
+
+  .front,
+  .bottom {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    line-height: 35px;
+    text-align: center;
+  }
+
+  .item div:first-child {
+    background-color: aqua;
+    z-index: 1;
+  }
+
+  .item div:last-child {
+    background-color: burlywood;
+  }
+</style>
+
+<body>
+  <ui>
+    <li>
+      <div class="item">
+        <div class="front">Hello World</div>
+        <div class="bottom">Muxiannian</div>
+      </div>
+    </li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ui>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+a {
+  text-decoration: none;
+}
+html {
+  font-size: 50px;
+}
+@media screen and (min-width: 320px) {
+  html {
+    font-size: 21.33333333px;
+  }
+}
+@media screen and (min-width: 360px) {
+  html {
+    font-size: 24px;
+  }
+}
+@media screen and (min-width: 375px) {
+  html {
+    font-size: 25px;
+  }
+}
+@media screen and (min-width: 384) {
+  html {
+    font-size: 25.6px;
+  }
+}
+@media screen and (min-width: 400) {
+  html {
+    font-size: 26.66666667px;
+  }
+}
+@media screen and (min-width: 414) {
+  html {
+    font-size: 27.6px;
+  }
+}
+@media screen and (min-width: 424) {
+  html {
+    font-size: 28.26666667px;
+  }
+}
+@media screen and (min-width: 480) {
+  html {
+    font-size: 32px;
+  }
+}
+@media screen and (min-width: 540) {
+  html {
+    font-size: 36px;
+  }
+}
+@media screen and (min-width: 720) {
+  html {
+    font-size: 48px;
+  }
+}
+@media screen and (min-width: 750) {
+  html {
+    font-size: 50px;
+  }
+}
+body {
+  min-width: 320px;
+  width: 15rem;
+  margin: 0 auto;
+  line-height: 1.5;
+  font-family: Arial, Helvetica;
+  background-color: #f2f2f2;
+}
+.search-content {
+  width: 15rem;
+  height: 1.76rem;
+  background-color: #ffc001;
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+}
+.classify {
+  width: 0.88rem;
+  height: 1.4rem;
+  margin: 0.22rem 0.5rem 0.14rem 0.48rem;
+  background: url(../images/classify.png) no-repeat;
+  background-size: 0.88rem 1.4rem;
+}
+.search {
+  flex: 1;
+}
+.search input {
+  outline: none;
+  width: 100%;
+  height: 1.32rem;
+  border-radius: 0.66rem;
+  background-color: #fff2cc;
+  border: 0;
+  margin-top: 12rem 50;
+  font-size: 0.5rem;
+  padding-left: 1.1rem;
+  color: #757575;
+}
+.login {
+  width: 1.5rem;
+  height: 1.4rem;
+  margin: 0.2rem;
+  font-size: 0.5rem;
+  text-align: center;
+  color: #fff;
+  line-height: 1.4rem;
+}
+.banner {
+  width: 15rem;
+  height: 7.36rem;
+}
+.banner img {
+  width: 100%;
+  height: 100%;
+}
+.ad {
+  display: flex;
+  width: 15rem;
+}
+.ad a {
+  flex: 1;
+}
+.ad a img {
+  width: 100%;
+}
+nav {
+  width: 15rem;
+}
+nav a {
+  width: 3rem;
+  height: 2.8rem;
+  text-align: center;
+  float: left;
+}
+nav a img {
+  width: 1.64rem;
+  height: 1.64rem;
+  margin: 0.2rem auto 0;
+  display: block;
+}
+nav a span {
+  display: block;
+  font-size: 0.5rem;
+  color: #333;
+  margin-top: 0.2rem;
+}

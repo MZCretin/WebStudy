@@ -1,0 +1,91 @@
+@import "common";
+// @import 导入的意思 可以吧一个样式文件导入到另外一个样式文件中去
+body {
+    min-width: 320px;
+    width: 15rem;
+    margin: 0 auto;
+    line-height: 1.5;
+    font-family: Arial, Helvetica;
+    background-color: #f2f2f2;
+}
+@baseFont: 50;
+.search-content {
+    width: 15rem;
+    height: 88rem / @baseFont;
+    background-color: #ffc001;
+    position: fixed;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    display: flex;
+}
+.classify {
+    width: 44rem / @baseFont;
+    height: 70rem / @baseFont;
+    margin: 11rem / @baseFont 25rem / @baseFont 7rem / @baseFont 24rem / @baseFont;
+    background: url(../images/classify.png) no-repeat;
+    background-size: 44rem / @baseFont 70rem / @baseFont;
+}
+.search {
+    flex: 1;
+    input {
+        outline: none;
+        width: 100%;
+        height: 66rem / @baseFont;
+        border-radius: 33rem / @baseFont;
+        background-color: #fff2cc;
+        border: 0;
+        margin-top: 12rem @baseFont;
+        font-size: 25rem / @baseFont;
+        padding-left: 55rem / @baseFont;
+        color: #757575;
+    }
+}
+.login {
+    width: 75rem / @baseFont;
+    height: 70rem / @baseFont;
+    margin: 10rem / @baseFont;
+    font-size: 25rem / @baseFont;
+    text-align: center;
+    color: #fff;
+    line-height: 70rem / @baseFont;
+}
+.banner {
+    width: 750rem / @baseFont;
+    height: 368rem / @baseFont;
+}
+.banner img {
+    width: 100%;
+    height: 100%;
+}
+.ad {
+    display: flex;
+    width: 750rem / @baseFont;
+    a {
+        flex: 1;
+        img {
+            width: 100%;
+        }
+    }
+}
+nav {
+    width: 750rem / @baseFont;
+    a {
+        width: 150rem / @baseFont;
+        height: 140rem / @baseFont;
+        text-align: center;
+        float: left;
+        img {
+            width: 82rem / @baseFont;
+            height: 82rem / @baseFont;
+            margin: 10rem / @baseFont auto 0;
+            display: block;
+        }
+        span {
+            display: block;
+            font-size: 25rem / @baseFont;
+            color: #333;
+            margin-top: 10rem / @baseFont;
+        }
+    }
+}

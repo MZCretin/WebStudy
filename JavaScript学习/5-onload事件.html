@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="time"></div>
+    <script>
+        var timer1 = setTimeout(function () {
+            console.log('滴滴滴');
+            window.clearTimeout(timer2)
+        }, 2000)
+        var timer2 = setTimeout(function () {
+            console.log('滴滴滴');
+        }, 5000)
+
+
+        var myDate = new Date();
+        var time = myDate.getTime() / 1000;
+        var mss = myDate.getTime();
+        console.log(+new Date());
+
+        console.log(myDate.toLocaleTimeString());
+        setInterval(function () {
+            time += 1;
+            console.log(time % (3600 * 24));
+            var timeDiv = document.querySelector('.time')
+            timeDiv.innerHTML = parseInt(time % (3600 * 24) / 3600) + ':' + parseInt(time / 60 % 60) + ':' + parseInt(time % 60);
+        }, 1000)
+    </script>
+</body>
+
+</html>

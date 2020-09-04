@@ -1,0 +1,64 @@
+@media screen and (min-width:750px) {
+    html {
+        font-size: 75px!important;
+    }
+}
+
+body {
+    min-width: 320px;
+    width: 10rem;
+    margin: 0 auto;
+    line-height: 1.5;
+    font-family: Arial, Helvetica;
+    background: #f2f2f2;
+    max-width: 750px;
+}
+
+a {
+    text-decoration: none;
+    font-size: .333333rem;
+}
+
+.search-content {
+    width: 10rem;
+    top: 0;
+    left: 50%;
+    height: 1.173333rem;
+    background-color: #ffc001;
+    display: flex;
+}
+
+.classify {
+    width: .586667rem;
+    height: .933333rem;
+    margin: .146667rem .333333rem .133333rem;
+    background: url(../images/classify.png) no-repeat;
+    background-size: .586667rem .933333rem;
+}
+
+.search {
+    flex: 1;
+}
+
+.search input {
+    width: 100%;
+    height: .88rem;
+    border: 0;
+    outline: none;
+    background-color: #fff2cc;
+    margin-top: .133333rem;
+    border-radius: .44rem;
+    padding-left: .733333rem;
+    color: #757575;
+    font-size: .333333rem;
+}
+
+.login {
+    width: 1rem;
+    height: .933333rem;
+    margin: .133333rem;
+    text-align: center;
+    line-height: .933333rem;
+    font-size: .333333rem;
+    color: white;
+}

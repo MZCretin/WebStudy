@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  body {
+    background-color: #333;
+  }
+
+  .map {
+    width: 747px;
+    height: 617px;
+    background: url(images/map.png) no-repeat;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .city {
+    position: absolute;
+    right: 194px;
+    top: 228px;
+  }
+
+  .point {
+    width: 8px;
+    height: 8px;
+    background-color: aqua;
+    border-radius: 50%;
+  }
+
+  .city div[class^="circle"] {
+    width: 8px;
+    height: 8px;
+    box-shadow: 0 0 12px #009dfd;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: kuosan 1.2s linear infinite;
+  }
+
+  .city div.circle1 {
+    animation-delay: 0.4s;
+  }
+
+  .city div.circle2 {
+    animation-delay: 0.8s;
+  }
+
+  @keyframes kuosan {
+    0% {}
+
+    70% {
+      /* transform: scale(5);  我们不要用scale 因为他会让 阴影变大*/
+      width: 40px;
+      height: 40px;
+      opacity: 1;
+    }
+
+    100% {
+      width: 70px;
+      height: 70px;
+      opacity: 0;
+    }
+  }
+
+  .tb {
+    right: 79px;
+    top: 497px;
+  }
+
+  .gz {
+    right: 174px;
+    top: 529px;
+  }
+</style>
+
+<body>
+  <div class="map">
+    <div class="city">
+      <div class="point"></div>
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+      <div class="circle3"></div>
+    </div>
+
+    <div class="city tb">
+      <div class="point"></div>
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+      <div class="circle3"></div>
+    </div>
+
+    <div class="city gz">
+      <div class="point"></div>
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+      <div class="circle3"></div>
+    </div>
+  </div>
+</body>
+
+</html>

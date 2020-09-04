@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="http://www.liangshouyingzs.com/static/index/pc/js/jquery.min.js"></script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .pic {
+      width: 500px;
+      height: 500px;
+      background-color: pink;
+      margin: 100px auto;
+    }
+
+    .pic li {
+      box-sizing: border-box;
+      float: left;
+      width: 33.33%;
+      height: 33.33%;
+      border: 1px solid #cccccc;
+      overflow: hidden;
+      background-image: url("img/cat.jpeg");
+    }
+  </style>
+</head>
+
+<body>
+
+  <ul class="pic">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <script>
+    $(".pic").children("li").each(function () {
+      var index = $(this).index()
+      $(this).css({ "background-position": "-" + index % 3 + "00% -" + parseInt(index / 3) + "00%" })
+    });
+
+    $(".pic").children().click(function () {
+      console.log($(this).index())
+    })
+  </script>
+
+</body>
+
+</html>
