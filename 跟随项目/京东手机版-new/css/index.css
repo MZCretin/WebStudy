@@ -1,0 +1,109 @@
+body {
+  width: 100%;
+  min-width: 320px;
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 14px;
+  font-family: -apple-system, Helvetica, sans-serif;
+  color: #666;
+  line-height: 1.5;
+}
+
+/*点击高亮我们需要清除清除  设置为transparent 完成透明*/
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/*在移动端浏览器默认的外观在iOS上加上这个属性才能给按钮和输入框自定义样式*/
+input {
+  -webkit-appearance: none;
+}
+
+
+/*禁用长按页面时的弹出菜单*/
+img,
+a {
+  -webkit-touch-callout: none;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  vertical-align: middle;
+}
+
+div {
+  /* css3 盒子模型 */
+  box-sizing: border-box;
+}
+
+.clearfix:after {
+  content: "";
+  display: block;
+  line-height: 0;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+}
+
+.app {
+  height: 45px;
+  background-color: #333333;
+}
+
+.app ul li {
+  float: left;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  color: white;
+}
+
+.app ul li:nth-child(1){
+  width: 8%;
+}
+
+.app ul li:nth-child(1) img {
+  width: 10px;
+  vertical-align: middle;
+}
+
+.app ul li:nth-child(2){
+  width: 10%;
+}
+
+.app ul li:nth-child(2) img {
+  width: 30px;
+}
+
+.app ul li:nth-child(3){
+  width: 57%;
+}
+
+.app ul li:nth-child(4){
+  width: 25%;
+  background-color: #F63515;
+}
+
+.search-wrap {
+  background-color: pink;
+}
+
+.search-wrap div:nth-child(1){
+  width: 40px;
+  height: 44px;
+  position: absolute;
+  background: url(../images/s-btn.png) no-repeat;
+  background-size: 20px 18px;
+
+}
