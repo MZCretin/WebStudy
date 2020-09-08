@@ -96,14 +96,91 @@ div {
 }
 
 .search-wrap {
-  background-color: pink;
+  height: 44px;
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  min-width: 320px;
+  max-width: 640px;
 }
 
-.search-wrap div:nth-child(1){
+.search_btn {
   width: 40px;
   height: 44px;
   position: absolute;
-  background: url(../images/s-btn.png) no-repeat;
-  background-size: 20px 18px;
+  left: 0;
+  top: 0;
+}
 
+.search_btn::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 18px;
+  background: url(../images/s-btn.png) no-repeat;
+  background-size: 20px 18px; 
+  margin: 14px 0 0 15px;
+}
+
+.search-login {
+  position: absolute;
+  right: 4px;
+  top: 0;
+  width: 40px;
+  height: 44px;
+  color: white;
+  line-height: 44px;
+  text-align: center;
+}
+
+.search {
+  margin: 0 50px;
+  border-radius: 15px;
+  background-color: white;
+  height: 30px;
+  margin-top: 7px;
+  position: relative;
+}
+
+.search-icon {
+  width: 20px;
+  height: 15px;
+  left: 13px;
+  position: absolute;
+  top: 8px;
+  background: url(../images/jd.png) no-repeat;
+  background-size: 20px 15px;
+}
+
+.search-icon::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 1px;
+  height: 15px;
+  top: 0;
+  right: -8px;
+  background-color: #ccc;
+}
+
+.sou {
+  width: 18px;
+  height: 15px;
+  position: absolute;
+  top: 8px;
+  left: 50px;
+  background: url(../images/jd-sprites.png) no-repeat -81px 0;
+  background-size: 200px auto;
+}
+
+.main-content {
+
+}
+
+.banner {
+  width: 100%;
+}
+
+.banner img {
+  width: 100%;
 }
