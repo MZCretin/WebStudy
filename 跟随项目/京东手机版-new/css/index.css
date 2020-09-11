@@ -173,14 +173,63 @@ div {
   background-size: 200px auto;
 }
 
-.main-content {
-
-}
-
 .banner {
   width: 100%;
 }
 
 .banner img {
+  width: 100%;
+}
+
+.sub_classify {
+  overflow: hidden;
+}
+
+.sub_classify div {
+  width: 33.33%;
+  float: left;
+}
+
+.sub_classify img {
+  width: 100%;
+}
+
+.classify {
+  overflow: hidden;
+}
+
+.classify a {
+  width: 20%;
+  float: left;
+  position: relative;
+  text-align: center;
+}
+
+.classify img {
+  width: 40px;
+  height: 40px;
+  margin: 10px 0;
+}
+
+.classify span {
+  display: block;
+} 
+
+.news {
+  margin-top: 10px;
+}
+
+.news img:nth-child(1){
+  width: 50%;
+}
+
+.news img:nth-child(n+2){
+  width: 25%;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.news img {
+  float: left;
   width: 100%;
 }
