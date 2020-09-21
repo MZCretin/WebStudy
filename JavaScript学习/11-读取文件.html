@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type='file' accept='text/plain' onchange='openFile(event)'><br>
+  <div id="output"></div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+  var openFile = function (event) {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function () {
+      if (reader.result) {
+        //显示文件内容
+        $("#output").html(reader.result);
+      }
+    };
+    reader.readAsText(input.files[0]);
+  };
+</script>
+
+</html>

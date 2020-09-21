@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>仙念跟你玩贪吃蛇</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-attachment: fixed;
+    background: url("./bg.jpg") no-repeat;
+    /* background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600549056547&di=8f21459dba5593d7e25da82aa8a7ba64&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2Fkm%2Ffg%2FQJ8693715313.jpg") no-repeat; */
+    background-size: cover;
+    font: normal 14px/1.5 "Microsoft Yahei", Tahoma, "Lucida Grande", Verdana, STXihei, hei;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .root {
+    margin: 20px auto;
+    width: 80%;
+  }
+
+  ul {
+    width: 100%;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 10px solid #8e7f63;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+
+  li {
+    flex: 5%;
+    box-sizing: border-box;
+    border-radius: 50%;
+  }
+
+  .point {
+    background-color: yellowgreen;
+  }
+
+  .point_head {
+    background-color: #fd913f;
+  }
+
+  .point_food {
+    background-color: red;
+  }
+
+  .handler {
+    height: 160px;
+    width: 200px;
+    margin: 20px auto;
+    position: relative;
+  }
+
+  .handler span {
+    width: 60px;
+    height: 60px;
+    display: block;
+    background-size: 60px 60px;
+    transition: all .1s;
+  }
+
+  .handler span:hover {
+    opacity: 0.8;
+  }
+
+  .up {
+    background: url("./shang.png") no-repeat;
+    margin: 0 auto;
+  }
+
+  .bg_opacity {
+    opacity: 0.8;
+  }
+
+  .left {
+    background: url("./zuo.png") no-repeat;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .right {
+    background: url("./you.png") no-repeat;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .bottom {
+    background: url("./xia.png") no-repeat;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+  }
+
+  .info {
+    font-size: 19px;
+    font-weight: 600;
+    color: tomato;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .main {
+    margin-top: 10px;
+  }
+
+  .info span {
+    flex: 50%;
+  }
+
+  .msg {
+    width: 300px;
+    height: 347px;
+    background-color: violet;
+    border-radius: 40px;
+    color: tomato;
+    font-size: 24px;
+    font-weight: 500;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    transition: all .3s;
+    display: none;
+    background: url("./tips.jpeg") no-repeat;
+  }
+
+  .msg span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 120px;
+  }
+
+  .msg .restart {
+    display: block;
+    width: 120px;
+    transform: translateX(-50%);
+    color: tomato;
+    background-color: skyblue;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    font-size: 20px;
+    border-radius: 30px;
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+  }
+
+  .msg img {
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: absolute;
+    left: 25px;
+    top: 25px;
+  }
+</style>
+
+<body>
+  <div class="root">
+    <div class="info">
+      <span class="score">分数：100分</span>
+      <span class="length">长度：100分</span>
+      <span class="speed">速率：67ms/步</span>
+    </div>
+
+    <ul class="main"></ul>
+
+    <div class="handler">
+      <span class="up"></span>
+      <span class="left"></span>
+      <span class="right"></span>
+      <span class="bottom"></span>
+    </div>
+
+    <div class="msg">
+      <span></span>
+      <span class="restart">重新开始</span>
+      <img src="./close.png" alt="">
+    </div>
+  </div>
+  <script>
+    var ul = document.querySelector(".main");
+    var w = document.body.offsetWidth * 0.8 * 0.05;
+    var lis = [];
+    var colume = 20;
+    var currentPoint = [];
+
+    var currentSpeed = 60;
+    var currentCount = 0;
+
+    var txtScore = document.querySelector(".score");
+    var txtSpeed = document.querySelector(".speed");
+    var txtLength = document.querySelector(".length");
+
+    var timer = null;
+
+    var aimPoint = 0;
+
+    var direction = 0; //0 right 1 bottom 2 left 3 top
+
+    var gameState = true;
+
+    var msg = document.querySelector(".msg");
+
+    //初始化
+    init();
+
+    function init() {
+      if (lis.length == 0)
+        for (var i = 0; i < colume * colume; i++) {
+          var li = document.createElement("li");
+          li.style.height = w + "px";
+          li.style.width = w + "px";
+          lis.push(li);
+          ul.appendChild(li);
+        }
+
+      currentPoint.push(0);
+      currentPoint.push(1);
+      currentPoint.push(2);
+      currentPoint.push(3);
+      currentPoint.push(4);
+
+      aimPoint = findNextPoint();
+
+      drawData();
+
+      startTimer();
+
+      // timer = setInterval(function () {
+      //   currentPoint.shift();
+      //   var temp = currentPoint[currentPoint.length - 1] + 1;
+      //   currentPoint.push(temp);
+      //   drawData();
+      // }, 1000);
+    }
+
+    //给上下左右添加点击事件
+    var up = document.querySelector(".up");
+    var left = document.querySelector(".left");
+    var right = document.querySelector(".right");
+    var bottom = document.querySelector(".bottom");
+
+    // up.addEventListener("mouseenter", hoverFun);
+    // left.addEventListener("mouseenter", hoverFun);
+    // right.addEventListener("mouseenter", hoverFun);
+    // bottom.addEventListener("mouseenter", hoverFun);
+
+    // up.addEventListener("mouseleave", hoverDisplayFun);
+    // left.addEventListener("mouseleave", hoverDisplayFun);
+    // right.addEventListener("mouseleave", hoverDisplayFun);
+    // bottom.addEventListener("mouseleave", hoverDisplayFun);
+
+    // function hoverFun() {
+    //   this.style.opacity = 0.8;
+    //   this.style.transform = 'scale(1.2)';
+    // }
+
+    // function hoverDisplayFun() {
+    //   this.style.opacity = 1;
+    //   this.style.transform = 'scale(1.0)';
+    // }
+
+    up.setAttribute('data-type', 'up')
+    up.addEventListener("click", handlerClick)
+    left.setAttribute('data-type', 'left')
+    left.addEventListener("click", handlerClick)
+    right.setAttribute('data-type', 'right')
+    right.addEventListener("click", handlerClick)
+    bottom.setAttribute('data-type', 'bottom')
+    bottom.addEventListener("click", handlerClick)
+
+    function reset() {
+      gameState = true;
+      colume = 20;
+      currentPoint = [];
+      currentCount = 0;
+      currentSpeed = 60;
+      direction = 0;
+      if (timer != null) {
+        clearInterval(timer);
+        timer = null;
+      }
+      init();
+    }
+
+    //0 right 1 bottom 2 left 3 top
+    function handlerClick() {
+      vibrate();
+
+      var type = this.getAttribute('data-type');
+      if (type == 'up') {
+        if (direction != 1)
+          direction = 3;
+      } else if (type == 'left') {
+        if (direction != 0)
+          direction = 2;
+      } else if (type == 'right') {
+        if (direction != 2)
+          direction = 0;
+      } else {
+        if (direction != 3)
+          direction = 1;
+      }
+    }
+
+    //0 right 1 bottom 2 left 3 top
+    function startTimer() {
+      timer = setInterval(function () {
+        currentCount++;
+        if (currentCount < currentSpeed) {
+          return;
+        }
+        currentCount = 0;
+        var last = currentPoint[currentPoint.length - 1];
+        //计算 x 和 y
+        var x = parseInt(last / colume);
+        var y = last % colume;
+        if (direction == 0) {
+          //向右
+          var next = last + 1;
+          if (next > (x + 1) * colume - 1) {
+            gameOver();
+            return;
+          }
+          appData(next);
+        } else if (direction == 1) {
+          var next = last + colume;
+          if (next > colume * colume - 1) {
+            gameOver();
+            return;
+          }
+          appData(next);
+        } else if (direction == 2) {
+          var next = last - 1;
+          if (next < x * colume) {
+            gameOver();
+            return;
+          }
+          appData(next);
+        } else {
+          var next = last - colume;
+          if (next < 0) {
+            gameOver();
+            return;
+          }
+          appData(next);
+        }
+
+        drawData();
+      }, 10);
+    }
+
+    function appData(next) {
+      //检查是否与自己相撞
+      if (currentPoint.indexOf(next) != -1) {
+        //相撞了
+        gameOver('追尾啦~游戏结束');
+        return;
+      }
+
+      var isFood = false;
+      if (next == aimPoint) {
+        //下一个是食物 可以增加长度
+        isFood = true;
+        changeSpeed();
+      } else {
+        currentPoint.shift();
+      }
+      currentPoint.push(next);
+      if (isFood) {
+        aimPoint = findNextPoint();
+      }
+    }
+
+    //修改速度
+    function changeSpeed() {
+      //当前长度所占比例
+      var rate = currentPoint.length / (colume * colume / 4);
+      currentSpeed = parseInt(60 * (1 - Math.pow(rate, 0.5)));
+    }
+
+    function findNextPoint() {
+      //获取一个随机值 0~最大值
+      var random = parseInt(Math.random() * (colume * colume - 1 + 1) + 1) - 1;
+      while (currentPoint.indexOf(random) != -1) {
+        //没有数据
+        random = parseInt(Math.random() * (colume * colume - 1 + 1) + 1) - 1;
+      }
+      return random;
+    }
+
+    function gameOver(message) {
+      vibrate(1000);
+      if (message) {
+
+      } else {
+        message = "撞墙啦，游戏失败"
+      }
+
+      msg.children[0].innerHTML = message;
+
+      msg.style.display = 'block'
+
+      if (timer != null) {
+        clearInterval(timer);
+        timer = null;
+      }
+
+      gameState = false;
+
+      var restart = document.querySelector(".restart");
+      var img = document.querySelector(".restart").nextElementSibling;
+      img.onclick = function () {
+        msg.style.display = 'none';
+      }
+      restart.onclick = function () {
+        if (gameState == false) {
+          //重启启动游戏
+          reset();
+        }
+
+        msg.style.display = 'none';
+      }
+    }
+
+    function vibrate(time) {
+      if (!time) {
+        time = 100;
+      }
+      if (navigator.vibrate) {
+        navigator.vibrate(time);
+      } else if (navigator.webkitVibrate) {
+        navigator.webkitVibrate(time);
+      } else if (navigator.mozVibrate) {
+        navigator.mozVibrate(time);
+      } else if (navigator.msVibrate) {
+        navigator.msVibrate(time);
+      } else {
+      }
+    }
+
+    function drawData() {
+      for (var i = 0; i < colume; i++) {
+        for (var j = 0; j < colume; j++) {
+          var temp = i * colume + j;
+          if (aimPoint == temp) {
+            //这里是目标区域位置
+            lis[temp].className = "point_food";
+          } else {
+            lis[temp].className = "";
+          }
+        }
+      }
+      for (var i = 0; i < currentPoint.length; i++) {
+        if (i == currentPoint.length - 1) {
+          //最后一个是蛇头
+          lis[currentPoint[i]].className = "point_head";
+        } else {
+          lis[currentPoint[i]].className = "point";
+        }
+      }
+      txtScore.innerHTML = "分数：" + (currentPoint.length - 5) * 20 + "分";
+      txtSpeed.innerHTML = "速率：" + currentSpeed + "ms/步";
+      txtLength.innerHTML = "长度：" + currentPoint.length;
+    }
+  </script>
+</body>
+
+</html>
