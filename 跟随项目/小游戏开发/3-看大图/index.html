@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>看大图啦</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  .origin {
+    width: 300px;
+    height: 206px;
+    border: 1px solid #ccc;
+    background: url("girl.jpg") no-repeat;
+    background-size: 300px;
+    position: relative;
+    margin-left: 20px;
+  }
+
+  .preview {
+    width: 600px;
+    height: 600px;
+    border: 1px solid #ccc;
+    margin-left: 20px;
+    background: url("girl.jpg") no-repeat;
+    background-position: 0 -200px;
+  }
+
+  .container {
+    display: flex;
+    margin-top: 20px;
+  }
+
+  .cover {
+    width: 50px;
+    height: 50px;
+    background-color: #cccccc;
+    opacity: 0.4;
+    position: absolute;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="origin">
+      <div class="cover"></div>
+    </div>
+    <div class="preview"></div>
+  </div>
+  <script>
+    var origin = document.querySelector(".origin");
+    var cover = document.querySelector(".cover");
+    var preview = document.querySelector(".preview");
+    preview.style.backgroundSize = (preview.offsetWidth / (cover.offsetWidth / origin.offsetWidth)) + "px";
+    preview.style.backgroundPosition = 0 + "px 0px";
+    origin.addEventListener("mousemove", function (e) {
+      var left = e.clientX - origin.offsetLeft - cover.offsetWidth / 2;
+      var top = e.clientY - origin.offsetTop - cover.offsetHeight / 2;
+      if (left < 0) {
+        left = 0;
+      }
+      if (left > origin.offsetWidth - cover.offsetWidth) {
+        left = origin.offsetWidth - cover.offsetWidth;
+      }
+      if (top < 0) {
+        top = 0;
+      }
+      if (top > origin.offsetHeight - cover.offsetHeight) {
+        top = origin.offsetHeight - cover.offsetHeight;
+      }
+      cover.style.left = left + "px";
+      cover.style.top = top + "px";
+
+      var xRate = left / origin.offsetWidth * 100;
+      var yRate = top / origin.offsetHeight * 100;
+      console.log("x " + xRate);
+      console.log("y " + yRate);
+
+      preview.style.backgroundPosition = -left / (cover.offsetWidth / preview.offsetWidth) + "px -" + top / (cover.offsetHeight / preview.offsetHeight) + "px";
+    })
+  </script>
+</body>
+
+</html>
