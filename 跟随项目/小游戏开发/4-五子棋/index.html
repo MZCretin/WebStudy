@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
+    <title>仙念五子棋</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            width: 100%;
+            min-width: 320px;
+            max-width: 640px;
+            background: url("./images/bg.jpg") no-repeat;
+            margin: 0 auto;
+            font-size: 14px;
+            font-family: -apple-system, Helvetica, sans-serif;
+            color: #666;
+            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        li,
+        img {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            box-sizing: border-box;
+            width: 90%;
+            height: 600px;
+            border-radius: 10px;
+            border: 10px solid sienna;
+            background-color: rgb(155, 101, 76);
+            position: relative;
+            margin: 20px;
+        }
+        
+        .container ul {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            height: 100%;
+            list-style: none;
+            border: 0.5px solid #ccc;
+            flex: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .panel li {
+            flex: 10%;
+            border: 0.5px solid #ccc;
+            box-sizing: border-box;
+        }
+        
+        .container .games {
+            left: 5%;
+            top: 5%;
+            border: 0.5px solid transparent;
+            width: 89.999999999%;
+            height: 89.999999999%;
+            overflow: hidden;
+        }
+        
+        .games li {
+            flex: 11.1111111%;
+            box-sizing: border-box;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .games li img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="panel"></ul>
+
+        <ul class="games"></ul>
+    </div>
+
+    <script>
+        var panel = document.querySelector(".panel");
+        var games = document.querySelector(".games");
+        var container = document.querySelector(".container");
+
+        container.style.height = document.body.clientWidth * 0.9 + "px";
+
+        for (var i = 0; i < 100; i++) {
+            var li = document.createElement("li");
+            li.style.height = panel.offsetWidth / 10 + "px";
+            panel.appendChild(li);
+        }
+
+        for (var i = 0; i < 9 * 9; i++) {
+            var liGame = document.createElement("li");
+            liGame.style.height = games.offsetWidth / 9 + "px";
+            var img = document.createElement("img");
+            img.src = "./images/white.gif"
+            liGame.appendChild(img);
+            games.appendChild(liGame);
+        }
+    </script>
+</body>
+
+</html>
