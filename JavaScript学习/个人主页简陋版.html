@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>穆仙念-中年油腻大叔</title>
+</head>
+<style>
+    .content {
+        color: tomato;
+        font-weight: 800;
+        font-size: 40px;
+        text-align: center;
+        padding: 40px;
+    }
+    
+    .tips {
+        font-size: 12px;
+        color: #333;
+        display: block;
+    }
+</style>
+
+<body>
+    <div class="content">
+        HELLO WORLD!
+
+        <span class="tips">
+          3S 后跳转主页~
+        </span>
+    </div>
+    <script>
+        var num = 3;
+        var tips = document.querySelector(".tips");
+        var timer = setInterval(function() {
+            num--;
+            if (num < 0) {
+                location.href = "https://www.mxnzp.com";
+                clearInterval(timer);
+            } else {
+                tips.innerHTML = (num) + "S 后跳转主页~"
+            }
+        }, 1000)
+    </script>
+</body>
+
+</html>

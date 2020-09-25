@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
     <title>仙念五子棋</title>
+    <script src="https://mxnzp-img-1259191366.cos.ap-chengdu.myqcloud.com/roll/wuziqi/js/jq.js"></script>
     <style>
         * {
             margin: 0;
@@ -15,13 +16,18 @@
             width: 100%;
             min-width: 320px;
             max-width: 640px;
-            background: url("./images/bg.jpg") no-repeat;
+            background: url("https://mxnzp-img-1259191366.cos.ap-chengdu.myqcloud.com/roll/wuziqi/images/bg.jpg") no-repeat;
             margin: 0 auto;
             font-size: 14px;
             font-family: -apple-system, Helvetica, sans-serif;
             color: #666;
             line-height: 1.5;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        
+        ul {
+            list-style: none;
         }
         
         li,
@@ -33,12 +39,13 @@
         .container {
             box-sizing: border-box;
             width: 90%;
-            height: 600px;
             border-radius: 10px;
             border: 10px solid sienna;
             background-color: rgb(155, 101, 76);
             position: relative;
-            margin: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
         }
         
         .container ul {
@@ -55,35 +62,162 @@
         }
         
         .panel li {
-            flex: 10%;
             border: 0.5px solid #ccc;
             box-sizing: border-box;
         }
         
         .container .games {
-            left: 5%;
-            top: 5%;
             border: 0.5px solid transparent;
-            width: 89.999999999%;
-            height: 89.999999999%;
             overflow: hidden;
         }
         
         .games li {
-            flex: 11.1111111%;
             box-sizing: border-box;
-            border-radius: 50%;
             position: relative;
         }
         
-        .games li img {
+        .container .games li img {
             width: 100%;
             height: 100%;
             display: block;
             position: absolute;
             left: 50%;
             top: 50%;
+            border: 0;
             transform: translateX(-50%) translateY(-50%);
+            padding: 0;
+            opacity: 0;
+            margin: 0;
+            transition: all .2s;
+        }
+        
+        audio {
+            display: none;
+        }
+        
+        .setting {
+            width: 35px;
+            height: 35px;
+            right: 20px;
+            top: 20px;
+            position: absolute;
+        }
+        
+        .setting img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .bottom,
+        .load,
+        .dialog {
+            display: none;
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            transition: all 0.3;
+        }
+        
+        .dialog ul {
+            width: 300px;
+            position: absolute;
+            left: 50%;
+            box-sizing: border-box;
+            border: 5px solid rgba(89, 167, 137, 0.2);
+            top: 50%;
+            background-color: wheat;
+            border-radius: 30px;
+            transform: translateX(-50%) translateY(-50%);
+            box-shadow: 2px 2px 10px #ccc;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+        }
+        
+        .dialog li {
+            font-size: 30px;
+            font-weight: 800;
+            margin: 10px;
+            flex: 100%;
+            line-height: 60px;
+            text-align: center;
+            color: tomato;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-radius: 30px;
+            border: 2px solid sienna;
+            box-shadow: 2px 2px 5px #ccc;
+        }
+        
+        li:hover {
+            opacity: 0.8;
+        }
+        
+        .bottom ul {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 20px 0;
+            width: 100%;
+            background-color: wheat;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 2px 2px 20px #ccc;
+        }
+        
+        .bottom li {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 20px;
+            line-height: 45px;
+            text-align: center;
+            color: tomato;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-radius: 30px;
+            border: 2px solid sienna;
+            box-shadow: 2px 2px 5px #ccc;
+        }
+        
+        .tips {
+            width: 100%;
+            height: 33px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: sienna;
+            line-height: 33px;
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            display: none;
+            transition: all .3s;
+        }
+        
+        .loading {
+            text-align: center;
+            width: 80px;
+            height: 80px;
+            background-color: #f5f5f5;
+            box-shadow: 2px 2px 5px #ccc;
+            border-radius: 20px;
+            position: absolute;
+            line-height: 80px;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        
+        .loading span {
+            display: block;
+            width: 60%;
+            left: 50%;
+            top: 50%;
+            position: absolute;
+            transform: translateX(-50%) translateY(-50%);
+            height: 60%;
+            background: url("https://mxnzp-img-1259191366.cos.ap-chengdu.myqcloud.com/roll/wuziqi/images/load1.gif") no-repeat;
+            background-size: 40px;
+            background-position: center;
         }
     </style>
 </head>
@@ -93,30 +227,36 @@
         <ul class="panel"></ul>
 
         <ul class="games"></ul>
+        <audio id="myaudio" autoplay="autoplay" loop="loop" preload="auto" controls="controls" src="https://mxnzp-img-1259191366.cos.ap-chengdu.myqcloud.com/roll/wuziqi/music/纯音乐-望江南.mp3">       
+    </div>
+    <div class="setting">
+        <img src="https://mxnzp-img-1259191366.cos.ap-chengdu.myqcloud.com/roll/wuziqi/images/setting.png" alt="">
     </div>
 
-    <script>
-        var panel = document.querySelector(".panel");
-        var games = document.querySelector(".games");
-        var container = document.querySelector(".container");
+    <div class="dialog">
+        <ul>
+            <li>设置棋盘大小</li>
+            <li>重新开始游戏</li>
+            <li>关 闭</li>
+        </ul>
+    </div>
 
-        container.style.height = document.body.clientWidth * 0.9 + "px";
-
-        for (var i = 0; i < 100; i++) {
-            var li = document.createElement("li");
-            li.style.height = panel.offsetWidth / 10 + "px";
-            panel.appendChild(li);
-        }
-
-        for (var i = 0; i < 9 * 9; i++) {
-            var liGame = document.createElement("li");
-            liGame.style.height = games.offsetWidth / 9 + "px";
-            var img = document.createElement("img");
-            img.src = "./images/white.gif"
-            liGame.appendChild(img);
-            games.appendChild(liGame);
-        }
-    </script>
+    <div class="bottom">
+        <ul>
+            <li>设置棋盘大小</li>
+            <li>设置游戏难度</li>
+            <li>重新开始游戏</li>
+            <li>关 闭</li>
+        </ul>
+    </div>
+    <div class="load">
+        <div class="loading">
+            <span></span>
+        </div>
+    </div>
+    <div class="tips">游戏开始啦~~</div>
+    <!-- <script src="https://mxnzp-img-1259191366.cos.ap-chengdu.myqcloud.com/roll/wuziqi/js/audio.js"></script> -->
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
