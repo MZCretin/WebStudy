@@ -1,20 +1,24 @@
 var panel = document.querySelector(".panel");
+var panel_bg = document.querySelector(".panel_bg");
 var container = document.querySelector(".container");
 
 panel.style.height = panel.clientWidth + "px";
+panel_bg.style.height = panel.clientWidth + "px";
 
 var h = document.documentElement.clientHeight;
 
-container.style.marginTop = (h - container.clientHeight) / 2 + 'px';
+container.style.marginTop = (h - container.clientHeight) / 4 + 'px';
 
 //设置数字
 var lis = panel.querySelectorAll("li");
+var lisBg = panel_bg.querySelectorAll("li");
 var itemWidth = lis[0].offsetWidth;
 
 for (var i = 0; i < lis.length; i++) {
-    lis[i].innerHTML = i;
     lis[i].style.height = itemWidth + "px";
     lis[i].style.lineHeight = itemWidth + "px";
+    lisBg[i].style.height = itemWidth + "px";
+    lisBg[i].style.lineHeight = itemWidth + "px";
 }
 
 initGame();
@@ -77,11 +81,21 @@ panel.addEventListener("touchend", function(e) {
     moveNum(direction)
 })
 
+function animationMove(li, value) {
+    li.style.transform = "translateX(" + value + ")";
+    // setTimeout(function() {
+    // li.style.transition = "all 0s";
+    // li.className = "colors"
+    // li.innerHTML = '';
+    // li.style.transform = "translateX(0%)";
+    // }, 300)
+}
+
 function moveNum(direction) {
-    var canMoveOne = false;
-    var canMoveTwo = false;
-    var canMoveThree = false;
-    var canMoveFour = false;
+    var canMoveOne = [];
+    var canMoveTwo = [];
+    var canMoveThree = [];
+    var canMoveFour = [];
 
     if (direction == 0) {
         //左
@@ -112,7 +126,7 @@ function moveNum(direction) {
         canMoveFour = moveToBottom(lis[15]);
     }
 
-    if (canMoveOne || canMoveTwo || canMoveThree || canMoveFour) {
+    if (canMoveOne.length != 0 || canMoveTwo.length != 0 || canMoveThree.length != 0 || canMoveFour.length != 0) {
         //有可以移动的 //找一个随机的位置
         findEmptyPostion();
     } else  {
@@ -121,13 +135,15 @@ function moveNum(direction) {
 }
 
 function setBg(position) {
-    for (var i = 0; i < lis.length; i++) {
-        if (position == i) {
-            lis[i].className = 'colors' + lis[i].innerHTML + " newClone";
-        } else {
-            lis[i].className = 'colors' + lis[i].innerHTML;
+    setTimeout(function() {
+        for (var i = 0; i < lis.length; i++) {
+            if (position == i) {
+                lis[i].className = 'colors' + lis[i].innerHTML + " newClone";
+            } else {
+                lis[i].className = 'colors' + lis[i].innerHTML;
+            }
         }
-    }
+    }, 300)
 }
 
 /**
@@ -157,6 +173,7 @@ function findEmptyPostion() {
     }
 }
 
+//0123
 function moveToLeft(li) {
     var position = parseInt(li.getAttribute("position"));
     var fourLi = lis[position];
@@ -168,7 +185,7 @@ function moveToLeft(li) {
     var oneLi = lis[position + 3];
     var one = oneLi.innerHTML;
 
-    return realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi);
+    return realMove(0, one, oneLi, two, twoLi, three, threeLi, four, fourLi);
 }
 
 function moveToRight(li) {
@@ -182,7 +199,7 @@ function moveToRight(li) {
     var oneLi = lis[position - 3];
     var one = oneLi.innerHTML;
 
-    return realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi);
+    return realMove(1, one, oneLi, two, twoLi, three, threeLi, four, fourLi);
 }
 
 function moveToTop(li) {
@@ -196,7 +213,7 @@ function moveToTop(li) {
     var oneLi = lis[position + 12];
     var one = oneLi.innerHTML;
 
-    return realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi);
+    return realMove(2, one, oneLi, two, twoLi, three, threeLi, four, fourLi);
 }
 
 function moveToBottom(li) {
@@ -210,11 +227,11 @@ function moveToBottom(li) {
     var oneLi = lis[position - 12];
     var one = oneLi.innerHTML;
 
-    return realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi);
+    return realMove(3, one, oneLi, two, twoLi, three, threeLi, four, fourLi);
 }
 
 /**
- * 如果有移动 就返回true
+ * 返回 所有需要移动的点的组合
  * @param {*} one 
  * @param {*} oneLi 
  * @param {*} two 
@@ -224,81 +241,119 @@ function moveToBottom(li) {
  * @param {*} four 
  * @param {*} fourLi 
  */
-function realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi) {
+function realMove(direction, one, oneLi, two, twoLi, three, threeLi, four, fourLi) {
+    var moveList = [];
     if (four == '') {
         if (three == '') {
             if (two == '') {
                 if (one == '') {
                     //do nothing
-                    return false;
+
                 } else {
-                    fourLi.innerHTML = oneLi.innerHTML;
-                    oneLi.innerHTML = '';
+                    moveList.push(new MoveNode(direction, 4, oneLi, function() {
+                        fourLi.innerHTML = oneLi.innerHTML;
+                        oneLi.innerHTML = '';
+                    }));
                 }
             } else {
                 if (one == '') {
-                    fourLi.innerHTML = twoLi.innerHTML;
-                    twoLi.innerHTML = '';
+                    moveList.push(new MoveNode(direction, 3, twoLi, function() {
+                        fourLi.innerHTML = twoLi.innerHTML;
+                        twoLi.innerHTML = '';
+                    }));
                 } else {
                     if (one == two) {
-                        fourLi.innerHTML = 0 + twoLi.innerHTML * 2;
-                        oneLi.innerHTML = '';
-                        twoLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 4, oneLi, function() {
+                            fourLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                            oneLi.innerHTML = '';
+                            twoLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 3, twoLi));
                     } else {
-                        threeLi.innerHTML = oneLi.innerHTML;
-                        fourLi.innerHTML = twoLi.innerHTML;
-                        oneLi.innerHTML = '';
-                        twoLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 3, twoLi, function() {
+                            threeLi.innerHTML = oneLi.innerHTML;
+                            fourLi.innerHTML = twoLi.innerHTML;
+                            oneLi.innerHTML = '';
+                            twoLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 3, oneLi));
                     }
                 }
             }
         } else { //第三个有数据
             if (two == '') {
                 if (one == '') {
-                    fourLi.innerHTML = threeLi.innerHTML;
-                    threeLi.innerHTML = '';
+                    moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                        fourLi.innerHTML = threeLi.innerHTML;
+                        threeLi.innerHTML = '';
+                    }));
                 } else {
                     // 1 3
                     if (one == three) {
-                        fourLi.innerHTML = 0 + oneLi.innerHTML * 2;
-                        oneLi.innerHTML = '';
-                        threeLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 4, oneLi, function() {
+                            fourLi.innerHTML = 0 + oneLi.innerHTML * 2;
+                            oneLi.innerHTML = '';
+                            threeLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 2, threeLi));
+
                     } else {
-                        fourLi.innerHTML = threeLi.innerHTML;
-                        threeLi.innerHTML = oneLi.innerHTML;
-                        oneLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                            fourLi.innerHTML = threeLi.innerHTML;
+                            threeLi.innerHTML = oneLi.innerHTML;
+                            oneLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 3, oneLi));
                     }
                 }
             } else {
                 if (one == '') {
                     //32
                     if (three == two) {
-                        fourLi.innerHTML = 0 + twoLi.innerHTML * 2;
-                        twoLi.innerHTML = '';
-                        threeLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 3, twoLi, function() {
+                            fourLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                            twoLi.innerHTML = '';
+                            threeLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 2, threeLi));
                     } else {
-                        fourLi.innerHTML = threeLi.innerHTML;
-                        threeLi.innerHTML = twoLi.innerHTML;
-                        twoLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                            fourLi.innerHTML = threeLi.innerHTML;
+                            threeLi.innerHTML = twoLi.innerHTML;
+                            twoLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 2, twoLi));
                     }
                 } else {
                     //321
                     if (three == two) {
-                        fourLi.innerHTML = 0 + threeLi.innerHTML * 2;
-                        threeLi.innerHTML = oneLi.innerHTML;
-                        twoLi.innerHTML = '';
-                        oneLi.innerHTML = '';
-                    } else {
-                        if (two == one) {
-                            fourLi.innerHTML = threeLi.innerHTML;
-                            threeLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                        moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                            fourLi.innerHTML = 0 + threeLi.innerHTML * 2;
+                            threeLi.innerHTML = oneLi.innerHTML;
                             twoLi.innerHTML = '';
                             oneLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 3, twoLi));
+                        moveList.push(new MoveNode(direction, 3, oneLi));
+                    } else {
+                        if (two == one) {
+                            moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                                fourLi.innerHTML = threeLi.innerHTML;
+                                threeLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                                twoLi.innerHTML = '';
+                                oneLi.innerHTML = '';
+                            }));
+                            moveList.push(new MoveNode(direction, 3, oneLi));
+                            moveList.push(new MoveNode(direction, 2, twoLi));
                         } else {
-                            fourLi.innerHTML = threeLi.innerHTML;
-                            threeLi.innerHTML = twoLi.innerHTML;
-                            twoLi.innerHTML = oneLi.innerHTML;
-                            oneLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                                fourLi.innerHTML = threeLi.innerHTML;
+                                threeLi.innerHTML = twoLi.innerHTML;
+                                twoLi.innerHTML = oneLi.innerHTML;
+                                oneLi.innerHTML = '';
+                            }));
+                            moveList.push(new MoveNode(direction, 2, twoLi));
+                            moveList.push(new MoveNode(direction, 2, oneLi));
                         }
                     }
                 }
@@ -309,43 +364,59 @@ function realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi) {
             if (two == '') {
                 if (one == '') {
                     // do nothing
-                    return false;
                 } else {
                     //41
                     if (four == one) {
-                        fourLi.innerHTML = 0 + oneLi.innerHTML * 2;
-                        oneLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 4, oneLi, function() {
+                            fourLi.innerHTML = 0 + oneLi.innerHTML * 2;
+                            oneLi.innerHTML = '';
+                        }));
                     } else {
-                        threeLi.innerHTML = oneLi.innerHTML;
-                        oneLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 3, oneLi, function() {
+                            threeLi.innerHTML = oneLi.innerHTML;
+                            oneLi.innerHTML = '';
+                        }));
                     }
                 }
             } else {
                 if (one == '') {
                     //42
                     if (four == two) {
-                        fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
-                        twoLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 3, twoLi, function() {
+                            fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
+                            twoLi.innerHTML = '';
+                        }));
                     } else {
-                        threeLi.innerHTML = twoLi.innerHTML;
-                        twoLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 2, twoLi, function() {
+                            threeLi.innerHTML = twoLi.innerHTML;
+                            twoLi.innerHTML = '';
+                        }));
                     }
                 } else {
                     //421
                     if (four = two) {
-                        fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
-                        threeLi.innerHTML = oneLi.innerHTML;
-                        twoLi.innerHTML = '';
-                        oneLi.innerHTML = '';
-                    } else {
-                        if (two == one) {
-                            threeLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                        moveList.push(new MoveNode(direction, 3, twoLi, function() {
+                            fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
+                            threeLi.innerHTML = oneLi.innerHTML;
                             twoLi.innerHTML = '';
                             oneLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 3, oneLi));
+                    } else {
+                        if (two == one) {
+                            moveList.push(new MoveNode(direction, 3, oneLi, function() {
+                                threeLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                                twoLi.innerHTML = '';
+                                oneLi.innerHTML = '';
+                            }));
+                            moveList.push(new MoveNode(direction, 2, twoLi));
                         } else {
-                            threeLi.innerHTML = twoLi.innerHTML;
-                            twoLi.innerHTML = oneLi.innerHTML;
-                            oneLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 2, twoLi, function() {
+                                threeLi.innerHTML = twoLi.innerHTML;
+                                twoLi.innerHTML = oneLi.innerHTML;
+                                oneLi.innerHTML = '';
+                            }));
+                            moveList.push(new MoveNode(direction, 2, oneLi));
                         }
                     }
                 }
@@ -355,25 +426,33 @@ function realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi) {
                 if (one == '') {
                     //43
                     if (four == three) {
-                        fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
-                        threeLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                            fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
+                            threeLi.innerHTML = '';
+                        }));
                     } else {
                         //do nothing
-                        return false;
                     }
                 } else {
                     //431
                     if (four == three) {
-                        fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
-                        threeLi.innerHTML = oneLi.innerHTML;
-                        oneLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                            fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
+                            threeLi.innerHTML = oneLi.innerHTML;
+                            oneLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 3, oneLi));
                     } else {
                         if (three == one) {
-                            threeLi.innerHTML = 0 + threeLi.innerHTML * 2;
-                            oneLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 3, oneLi, function() {
+                                threeLi.innerHTML = 0 + threeLi.innerHTML * 2;
+                                oneLi.innerHTML = '';
+                            }));
                         } else {
-                            twoLi.innerHTML = oneLi.innerHTML;
-                            oneLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 2, oneLi, function() {
+                                twoLi.innerHTML = oneLi.innerHTML;
+                                oneLi.innerHTML = '';
+                            }));
                         }
                     }
                 }
@@ -381,44 +460,60 @@ function realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi) {
                 if (one == '') {
                     //432
                     if (four == three) {
-                        fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
-                        threeLi.innerHTML = twoLi.innerHTML;
-                        twoLi.innerHTML = '';
+                        moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                            fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
+                            threeLi.innerHTML = twoLi.innerHTML;
+                            twoLi.innerHTML = '';
+                        }));
+                        moveList.push(new MoveNode(direction, 2, twoLi));
                     } else {
                         if (three == two) {
-                            threeLi.innerHTML = 0 + threeLi.innerHTML * 2;
-                            twoLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 2, twoLi, function() {
+                                threeLi.innerHTML = 0 + threeLi.innerHTML * 2;
+                                twoLi.innerHTML = '';
+                            }));
                         } else {
                             //do nothing
-                            return false;
                         }
                     }
                 } else {
                     //4321
                     if (four == three) {
                         if (two == one) {
-                            fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
-                            threeLi.innerHTML = 0 + twoLi.innerHTML * 2;
-                            twoLi.innerHTML = '';
-                            oneLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                                fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
+                                threeLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                                twoLi.innerHTML = '';
+                                oneLi.innerHTML = '';
+                            }));
+                            moveList.push(new MoveNode(direction, 2, twoLi));
+                            moveList.push(new MoveNode(direction, 3, oneLi));
                         } else {
-                            fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
-                            threeLi.innerHTML = twoLi.innerHTML;
-                            twoLi.innerHTML = oneLi.innerHTML;
-                            oneLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 2, threeLi, function() {
+                                fourLi.innerHTML = 0 + fourLi.innerHTML * 2;
+                                threeLi.innerHTML = twoLi.innerHTML;
+                                twoLi.innerHTML = oneLi.innerHTML;
+                                oneLi.innerHTML = '';
+                            }));
+                            moveList.push(new MoveNode(direction, 2, twoLi));
+                            moveList.push(new MoveNode(direction, 2, oneLi));
                         }
                     } else {
                         if (three == two) {
-                            threeLi.innerHTML = 0 + threeLi.innerHTML * 2;
-                            twoLi.innerHTML = oneLi.innerHTML;
-                            oneLi.innerHTML = '';
+                            moveList.push(new MoveNode(direction, 2, twoLi, function() {
+                                threeLi.innerHTML = 0 + threeLi.innerHTML * 2;
+                                twoLi.innerHTML = oneLi.innerHTML;
+                                oneLi.innerHTML = '';
+                            }));
+                            moveList.push(new MoveNode(direction, 2, oneLi));
                         } else {
                             if (two == one) {
-                                twoLi.innerHTML = 0 + twoLi.innerHTML * 2;
-                                oneLi.innerHTML = '';
+                                moveList.push(new MoveNode(direction, 2, oneLi, function() {
+                                    twoLi.innerHTML = 0 + twoLi.innerHTML * 2;
+                                    oneLi.innerHTML = '';
+                                }));
                             } else {
                                 //do nothing
-                                return false;
                             }
                         }
                     }
@@ -426,7 +521,7 @@ function realMove(one, oneLi, two, twoLi, three, threeLi, four, fourLi) {
             }
         }
     }
-    return true;
+    return moveList;
 }
 
 function getRandomNum(num) {
@@ -441,4 +536,58 @@ function getNewRandomNum() {
         return 4;
     }
     return 2;
+}
+
+class MoveNode {
+    constructor(direction, num, li, callback) {
+        this.direction = direction;
+        this.num = num;
+        this.li = li;
+
+        if (direction == 0) {
+            //左
+            li.style.transform = "translateX(-" + (100 * (num - 1)) + "%)";
+            callback();
+            // setTimeout(function() {
+            //     li.style.transition = "all 0s";
+            //     li.style.innerHTML = "";
+            //     li.style.transform = "translateX(0%)"
+            //     if (callback)
+            //         callback();
+            // }, 295)
+        } else if (direction == 1) {
+            //右
+            li.style.transform = "translateX(" + (100 * (num - 1)) + "%)";
+            callback();
+            // setTimeout(function() {
+            //     li.style.transition = "all 0s";
+            //     li.style.innerHTML = "";
+            //     li.style.transform = "translateX(0%)"
+            //     if (callback)
+            //         callback();
+            // }, 295)
+        } else if (direction == 2) {
+            //上
+            li.style.transform = "translateY(-" + (100 * (num - 1)) + "%)";
+            callback();
+            // setTimeout(function() {
+            //     li.style.transition = "all 0s";
+            //     li.style.innerHTML = "";
+            //     li.style.transform = "translateY(0%)"
+            //     if (callback)
+            //         callback();
+            // }, 295)
+        } else if (direction == 3) {
+            //下
+            li.style.transform = "translateY(" + (100 * (num - 1)) + "%)";
+            callback();
+            // setTimeout(function() {
+            //     li.style.transition = "all 0s";
+            //     li.style.innerHTML = "";
+            //     li.style.transform = "translateY(0%)"
+            //     if (callback)
+            //         callback();
+            // }, 295)
+        }
+    }
 }

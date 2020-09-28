@@ -25,23 +25,34 @@
         position: relative;
     }
     
-    .container {}
+    .container {
+        position: relative;
+    }
     
     ul {
         list-style: none;
     }
     /* 桌布 */
     
+    .panel_bg,
     .panel {
+        left: 0;
+        top: 0;
         width: 90%;
         border: 6px solid rgb(185, 171, 159);
         border-radius: 10px;
         margin: 10px;
         display: flex;
         flex-wrap: wrap;
+        position: absolute;
+        background-color: transparent;
+    }
+    
+    .panel_bg {
         background-color: rgb(185, 171, 159);
     }
     
+    .panel_bg li,
     .panel li {
         flex: 25%;
         width: 100%;
@@ -52,6 +63,10 @@
         font-weight: 800;
         border-radius: 8px;
         transition: transform .3s;
+    }
+    
+    .panel_bg li {
+        background-color: rgb(202, 190, 179);
     }
     
     .colors2 {
